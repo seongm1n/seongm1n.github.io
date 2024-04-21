@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://seongm1n.github.io/
