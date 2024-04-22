@@ -2,8 +2,8 @@
 title: 첫 회고록과 목표
 author: cotes
 date: 2024-04-23 00:00:00 +0800
-categories: [회고록, 2024]
-tags: [회고록, 목표, 2024]
+categories: [회고록, "2024"]
+tags: [회고록, 목표, "2024"]
 render_with_liquid: false
 ---
 
