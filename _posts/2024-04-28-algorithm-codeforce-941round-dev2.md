@@ -1,8 +1,8 @@
 ---
 title: "Codeforces #941 (div.2) 후기"
 date: 2024-04-28 00:00:00 +0800
-categories: [contest, codeforces]
-tags: ["#941", div2]
+categories: [codeforces, "div2"]
+tags: ["#941", codeforces, "div2"]
 math: true
 render_with_liquid: false
 ---
@@ -18,7 +18,8 @@ render_with_liquid: false
 ## 문제. A
 문제 출처 : [https://codeforces.com/contest/1966/problem/A](https://codeforces.com/contest/1966/problem/A)
 <center>
-A. Card Exchange<br>
+
+<b>A. Card Exchange</b><br>
 time limit per test1 second<br>
 memory limit per test256 megabytes<br>
 inputstandard input<br>
@@ -72,3 +73,115 @@ for _ in range(t):
 
 ### 후기
 div2 기준 A문제는 평균 10분에서 20분 정도 걸리는 것 같다. 영어라서 내가 이해 하는데 시간이 걸리는건지 코드포스에서 문제를 이해하기 어렵게 내는건지는 잘 모르겠다.
+
+## 문제. B
+
+문제 출처 : [https://codeforces.com/contest/1966/problem/B](https://codeforces.com/contest/1966/problem/B)
+
+<center>
+<b>B. Rectangle Filling </b><br>
+time limit per test1 second <br>
+memory limit per test256 megabytes <br>
+input<br> standard input <br>
+output<br>standard output <br>
+</center>
+
+There is an 𝑛×𝑚
+ grid of white and black squares. In one operation, you can select any two squares of the same color, and color all squares in the subrectangle between them that color.
+
+Formally, if you select positions (𝑥1,𝑦1)
+ and (𝑥2,𝑦2)
+, both of which are currently the same color 𝑐
+, set the color of all (𝑥,𝑦)
+ where min(𝑥1,𝑥2)≤𝑥≤max(𝑥1,𝑥2)
+ and min(𝑦1,𝑦2)≤𝑦≤max(𝑦1,𝑦2)
+ to 𝑐
+.
+
+This diagram shows a sequence of two possible operations on a grid:
+
+![B941](/assets/img/B941.png)
+
+Is it possible for all squares in the grid to be the same color, after performing any number of operations (possibly zero)?
+
+Input
+
+The first line of the input contains a single integer 𝑡
+ (1≤𝑡≤104
+) — the number of test cases. The description of the test cases follows.
+
+The first line of each test case contains two integers 𝑛
+ and 𝑚
+ (1≤𝑛,𝑚≤500
+) — the number of rows and columns in the grid, respectively.
+
+Each of the next 𝑛
+ lines contains 𝑚
+ characters 'W' and 'B' — the initial colors of the squares of the grid.
+
+It is guaranteed that the sum of 𝑛⋅𝑚
+ over all test cases does not exceed 3⋅105
+.
+
+Output
+
+For each test case, print "YES" if it is possible to make all squares in the grid the same color, and "NO" otherwise.
+
+You can output the answer in any case (upper or lower). For example, the strings "yEs", "yes", "Yes", and "YES" will be recognized as positive responses.
+
+### 접근
+주어진 사각형의 맨위, 맨아래, 맨오른쪽, 맨왼쪽에 w가 한개 이상씩 있으면 전부 w로 칠할 수 있다. b도 마찬가지
+
+### 풀이
+w 또는 b가 한개씩 있는지 확인한 후 w, b 둘중에 한개라도 칠할 수 있다면 true
+
+```python
+t = int(input())
+for _ in range(t):
+    n, m = map(int, input().split())
+    graph = []
+    for i in range(n):
+        graph.append(input())
+    black = True
+    white = True
+ 
+    b, w = False, False
+    for i in range(n):
+        if graph[i][0] == 'B':
+            b = True
+        else:
+            w = True
+    black, white = b and black, w and white
+ 
+    b, w = False, False
+    for i in range(n):
+        if graph[i][-1] == 'B':
+            b = True
+        else:
+            w = True
+    black, white = b and black, w and white
+ 
+    b, w = False, False
+    for i in range(m):
+        if graph[0][i] == 'B':
+            b = True
+        else:
+            w = True
+    black, white = b and black, w and white
+ 
+    b, w = False, False
+    for i in range(m):
+        if graph[-1][i] == 'B':
+            b = True
+        else:
+            w = True
+    black, white = b and black, w and white
+ 
+    if black or white:
+        print("YES")
+    else:
+        print("NO")
+```
+
+### 후기
+B문제까지는 항상 무난하게 풀린다. 특히 이번에는 예시가 직관적이라서 A문제보다 더 빠르게 풀었던 것 같다. 마찬가지로 그리디
