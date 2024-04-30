@@ -20,8 +20,8 @@ render_with_liquid: false
 <center>
 
 <b>A. Card Exchange</b><br>
-time limit per test1 second<br>
-memory limit per test256 megabytes<br>
+time<br> limit per test1 second<br>
+memory<br> limit per test256 megabytes<br>
 input<br>standard input<br>
 output<br>standard output
 </center><br>
@@ -80,8 +80,8 @@ div2 기준 A문제는 평균 10분에서 20분 정도 걸리는 것 같다. 영
 
 <center>
 <b>B. Rectangle Filling </b><br>
-time limit per test1 second <br>
-memory limit per test256 megabytes <br>
+time<br> limit per test1 second <br>
+memory<br> limit per test256 megabytes <br>
 input<br> standard input <br>
 output<br>standard output <br>
 </center>
@@ -186,3 +186,78 @@ for _ in range(t):
 
 ### 후기
 B문제까지는 항상 무난하게 풀린다. 특히 이번에는 예시가 직관적이라서 A문제보다 더 빠르게 풀었던 것 같다. 마찬가지로 그리디
+
+## 문제. C
+
+문제 출처 : [https://codeforces.com/contest/1966/problem/C](https://codeforces.com/contest/1966/problem/C)
+
+<center>
+<b>C. Everything Nim</b><br>
+time<br> limit per test2 seconds<br>
+memory<br> limit per test256 megabytes<br>
+input<br>standard input<br>
+output<br>standard output
+</center>
+<br>
+Alice and Bob are playing a game on 𝑛
+ piles of stones. On each player's turn, they select a positive integer 𝑘
+ that is at most the size of the smallest nonempty pile and remove 𝑘
+ stones from each nonempty pile at once. The first player who is unable to make a move (because all piles are empty) loses.
+
+Given that Alice goes first, who will win the game if both players play optimally?
+
+Input
+
+The first line of the input contains a single integer 𝑡
+ (1≤𝑡≤104
+) — the number of test cases. The description of the test cases follows.
+
+The first line of each test case contains a single integer 𝑛
+ (1≤𝑛≤2⋅105
+) — the number of piles in the game.
+
+The next line of each test case contains 𝑛
+ integers 𝑎1,𝑎2,…𝑎𝑛
+ (1≤𝑎𝑖≤109
+), where 𝑎𝑖
+ is the initial number of stones in the 𝑖
+-th pile.
+
+It is guaranteed that the sum of 𝑛
+ over all test cases does not exceed 2⋅105
+.
+
+Output
+
+For each test case, print a single line with the name of the winner, assuming both players play optimally. If Alice wins, print "Alice", otherwise print "Bob" (without quotes).
+
+### 접근
+그리디 문제임은 알고 있었다. 중복을 제거하고 오름차순으로 정렬해서 그리디만 해결하면 될 것 같았는데 정말 풀릴 듯 풀리지 않았다.
+
+### 풀이
+중복 제거 후 오름차순 정렬까지는 맞았다.~~(중복은 제거 안해줘도 되더라)~~<br>
+이후 거꾸로 for문을 돌려서 돌무더기의 차이가 1이상 날때마다 Alice의 승리를 True로 바꿔주고 이미 True인데 2이상 차이나는 경우 False로 바꿔준다.
+
+### 코드
+```python
+t = int(input())
+for _ in range(t):
+    n = int(input())
+    arr = list(map(int, input().split()))
+    arr.append(0)
+    arr.sort()
+    win = False
+    for i in range(n - 1, -1, -1):
+        h = arr[i + 1] - arr[i]
+        if h == 0:
+            continue
+        if not win:
+            win = True
+        elif h == 1:
+            win = False
+    print("Alice" if win else "Bob")
+```
+
+### 후기
+그리디 문제는 결국 풀고 나면 허탈할 정도로 쉽게 풀린다.<br>
+문제를 풀면서 계속 앞부분을 해결할려면 뒷부분을 먼저 확인해야 될 것 같은 느낌이 들었다. 다음부터는 이런경우에 역순으로 탐색하는 것도 시도해 보면 좋을 것 같다.
