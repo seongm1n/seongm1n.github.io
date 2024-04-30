@@ -22,8 +22,8 @@ render_with_liquid: false
 <b>A. Card Exchange</b><br>
 time limit per test1 second<br>
 memory limit per test256 megabytes<br>
-inputstandard input<br>
-outputstandard output
+input<br>standard input<br>
+output<br>standard output
 </center><br>
 
 You have a hand of 𝑛 cards, where each card has a number written on it, and a fixed integer 𝑘. You can perform the following operation any number of times:
