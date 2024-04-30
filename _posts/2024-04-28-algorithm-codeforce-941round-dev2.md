@@ -135,6 +135,7 @@ You can output the answer in any case (upper or lower). For example, the strings
 ### 풀이
 w 또는 b가 한개씩 있는지 확인한 후 w, b 둘중에 한개라도 칠할 수 있다면 true
 
+### 코드
 ```python
 t = int(input())
 for _ in range(t):
