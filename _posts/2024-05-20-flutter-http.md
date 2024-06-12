@@ -26,7 +26,102 @@ dependencies:
     sdk: flutter
   http: ^0.13.3  # 최신 버전으로 변경
 ```
-
+<br><br><br>
 ## 사용법
 
-test
+### GET 요청
+
+```dart
+class GetDataWidget extends StatefulWidget {
+  @override
+  _GetDataWidgetState createState() => _GetDataWidgetState();
+}
+
+class _GetDataWidgetState extends State<GetDataWidget> {
+  String data = "Loading...";
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        data = json.decode(response.body)['title'];
+      });
+    } else {
+      setState(() {
+        data = "Failed to load data";
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(data);
+  }
+}
+```
+<br><br>
+
+GET 요청은 주어진 URL로부터 데이터를 가져오는 데 사용
+
+
+### POST 요청
+
+```dart
+class PostDataWidget extends StatefulWidget {
+  @override
+  _PostDataWidgetState createState() => _PostDataWidgetState();
+}
+
+class _PostDataWidgetState extends State<PostDataWidget> {
+  String responseMessage = "No Response";
+
+  Future<void> sendData() async {
+    final response = await http.post(
+      Uri.parse('https://jsonplaceholder.typicode.com/posts'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'title': 'foo',
+        'body': 'bar',
+        'userId': '1',
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      setState(() {
+        responseMessage = "Success: ${response.body}";
+      });
+    } else {
+      setState(() {
+        responseMessage = "Failed: ${response.body}";
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(responseMessage),
+        ElevatedButton(
+          onPressed: sendData,
+          child: Text('Send POST Request'),
+        ),
+      ],
+    );
+  }
+}
+
+```
+
+POST 요청은 서버에 데이터를 전송하는 데 사용
+
