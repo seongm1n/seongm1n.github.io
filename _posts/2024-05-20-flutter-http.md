@@ -126,6 +126,7 @@ class _PostDataWidgetState extends State<PostDataWidget> {
 ```
 
 POST 요청은 서버에 데이터를 전송하는 데 사용
+<br><br>
 
 ## 적용
 ```dart
