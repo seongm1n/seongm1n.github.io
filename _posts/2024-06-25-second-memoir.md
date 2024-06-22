@@ -20,3 +20,4 @@ __[COMMAN](https://github.com/seongm1n/flutter-academic-management)__
 
 ### 교내 프로그래밍 경시 대회
 
+요즘 너무 많은 성취를 얻은 것 같다...
