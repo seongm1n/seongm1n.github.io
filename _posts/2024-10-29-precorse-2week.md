@@ -72,6 +72,7 @@ OutputView 클래스: 각 라운드의 결과를 출력하고, 우승자를 표�
 ```Controller```는 사용자 입력과 비즈니스 로직(Model)을 연결하고, 결과를 View에 전달하는 역할을 합니다.<br>
 GameController 클래스: 경주를 진행하는 전체 과정을 관리한다.
 
+
 ## JAVA Stream
 
 그 전에는 for이 있는데 굳이 Stream을 써야되나? 라는 생각을 했었다. 이번에 많은 사람들의 코드 리뷰를 하고 내 코드를 리뷰 받으면서 Stream을 사용하면 확실히 이점이 있다는 것을 알게되었다.
@@ -171,4 +172,95 @@ Stream<String> stream = list.stream()
     .skip(n)    // 앞에서부터 n개 skip하기
     .peek(System.out::println) // 중간 작업결과 확인
 ```
+
+### 최종 연산
+
+**Calculating**
+
+```java
+IntStream stream = list.stream()
+	.count()   //스트림 요소 개수 반환
+    .sum()     //스트림 요소의 합 반환
+    .min()     //스트림의 최소값 반환
+    .max()     //스트림의 최대값 반환
+    .average() //스트림의 평균값 반환
+```
+
+**Reduction**
+
+```java
+IntStream stream = IntStream.range(1,5);
+	.reduce(10, (total,num)->total+num);
+    //reduce(초기값, (누적 변수,요소)->수행문)
+    // 10 + 1+2+3+4+5 = 25
+```
+
+**Collecting**
+
+```java
+//예시 리스트
+List<Person> members = Arrays.asList(new Person("lee",26),
+									 new Person("kim", 23),
+									 new Person("park", 23));
+                    
+// toList() - 리스트로 반환
+members.stream()
+	.map(Person::getLastName)
+    .collect(Collectors.toList());
+    // [lee, kim, park]
+    
+// joining() - 작업 결과를 하나의 스트링으로 이어 붙이기
+members.stream()
+	.map(Person::getLastName)
+    .collect(Collectors.joining(delimiter = "+" , prefix = "<", suffix = ">");
+    // <lee+kim+park>
+    
+//groupingBy() - 그룹지어서 Map으로 반환
+members.stream()
+	.collect(Collectors.groupingBy(Person::getAge));
+	// {26 = [Person{lastName="lee",age=26}],
+    //  23 = [Person{lastName="kim",age=23},Person{lastName="park",age=23}]}
+    
+//collectingAndThen() - collecting 이후 추가 작업 수행
+members.stream()
+	.collect(Collectors.collectingAndThen (Collectors.toSet(),
+    									   Collections::unmodifiableSet));
+	//Set으로 collect한 후 수정불가한 set으로 변환하는 작업 실행
+```
+
+**Matching**
+
+```java
+List<String> members = Arrays.asList("Lee", "Park", "Hwang");
+boolean matchResult = members.stream()
+						.anyMatch(members->members.contains("w")); //w를 포함하는 요소가 있는지, True
+
+boolean matchResult = members.stream()
+						.allMatch(members->members.length() >= 4); //모든 요소의 길이가 4 이상인지, False
+
+boolean matchResult = members.stream()
+						.noneMatch(members->members.endsWith("t")); //t로 끝나는 요소가 하나도 없는지, True
+```
+
+**Iterating**
+
+```java
+members.stream()
+	.map(Person::getName)
+    .forEach(System.out::println);
+    //결과를 출력 (peek는 중간, forEach는 최종)
+```
+
+**Finding**
+
+```java
+Person person = members.stream()
+					.findAny()   //먼저 찾은 요소 하나 반환, 병렬 스트림의 경우 첫번째 요소가 보장되지 않음
+                    .findFirst() //첫번째 요소 반환
+```
+
+
+아직까지는 stream을 사용하는 것이 익숙하지 않지만 for을 사용할때마다 의식적으로 연습해야 될 것 같다.
+
+## 우아한 아이들
 
