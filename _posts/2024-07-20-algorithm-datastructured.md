@@ -40,5 +40,37 @@ int[][] classStudentNumber;
 classStudentNumber = new int[10][30];
 ```
 
-## 2. 스택
+## 2. 스택 (Stack)
 
+- 후입선출(LIFO) 구조
+
+JAVA에서 제공하는 Stack 클래스
+### 예제
+
+```java
+Stack<Element> stack = new Stack<>();
+```
+위와 같이 생성할 수 있으며 기본적으로 push(), pop(), peek(), empty(), search() 기능을 지원한다.
+
+```java
+import java.util.Stack;
+import javax.lang.model.element.Element;
+
+public class Main {
+    public static void main(String[] args) {
+        Stack<Integer> stack = new Stack<>();//push, pop, peek, empty, seach 지원
+        for(int i=1; i<=5 ; i++) {
+            stack.push(i);
+            System.out.println(stack.peek());
+        } //1, 2, 3, 4, 5 출력
+        stack.pop();
+        System.out.println("Pop()");
+        System.out.println(stack.peek());    //4출력
+        System.out.println(stack.search(3));    //2출력
+        System.out.println(stack.empty());    //false출력
+    }
+
+}
+```
+
+## 3. 큐 (Queue)
