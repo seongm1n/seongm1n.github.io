@@ -74,3 +74,29 @@ public class Main {
 ```
 
 ## 3. 큐 (Queue)
+
+- 선입 선출(FIFO) 구조
+
+### 예제
+
+```java
+Queue<자료형> q = new LinkedList<>();
+```
+
+
+1. 삽입
+```
+q.add(삽입할 value);
+```
+
+2. 삭제
+```
+q.remove();
+```
+
+3. 큐의 프론트에 위치한 벨류 반환
+```
+q.peek();
+```
+
+## 4. 힙 (heap)
