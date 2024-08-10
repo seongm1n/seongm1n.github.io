@@ -1,5 +1,5 @@
 ---
-title: "JAVA로 자료구조 구현해보기"
+title: "JAVA로 자료구조 사용법"
 date: 2024-07-20 00:00:00 +0800
 categories: [algorithm, java]
 tags: [자료구조]
