@@ -43,7 +43,48 @@ public class Main {
 
 ### 예제
 
+BOJ-5297 [키로거](https://www.acmicpc.net/problem/5397)
 
+스택을 2개 이용하여 커서의 왼쪽과 오른쪽을 구분한다.
+
+
+```java
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s;
+        int t = Integer.parseInt(br.readLine());
+        while (t-- > 0) {
+            s = br.readLine();
+            Stack<Character> stack1 = new Stack<>();
+            Stack<Character> stack2 = new Stack<>();
+            for (char c : s.toCharArray()) {
+                if (c == '<') {
+                    if (!stack1.isEmpty()) { stack2.push(stack1.pop()); }
+                }
+                else if (c == '>') {
+                    if (!stack2.isEmpty()) { stack1.push(stack2.pop()); }
+                }
+                else if (c == '-') {
+                    if (!stack1.isEmpty()) { stack1.pop(); }
+                }
+                else { stack1.push(c); }
+            }
+
+            StringBuilder sb = new StringBuilder();
+            while (!stack1.isEmpty()) { stack2.push(stack1.pop()); }
+            while (!stack2.isEmpty()) { sb.append(stack2.pop()); }
+            System.out.println(sb.toString());
+        }
+    }
+}
+```
+
+몇가지 메소드만 알면 스택을 쉽게 이용할 수 있어서 큰 어려움이 없었다.<br>
+출력할때 계속 시간초과가 나서 이유를 한참 찾았다.
 
 ## 2. 큐 (Queue)
 
