@@ -90,26 +90,61 @@ public class Main {
 
 - 선입 선출(FIFO) 구조
 
-### 예제
+### 사용법
 
 ```java
-Queue<자료형> q = new LinkedList<>();
+import java.util.Queue;
+import java.util.LinkedList;
+
+public class Main {
+    public static void main(String[] args) {
+        Queue<Integer> q = new LinkedList<>();
+
+        for(int i=1; i<=5 ; i++) {
+            q.add(i);
+            System.out.println(q.peek());
+        }
+        q.remove();
+        System.out.println("remove()");
+        System.out.println(q.peek());
+        System.out.println(q.isEmpty());
+    }
+
+}
 ```
 
+### 예제
 
-1. 삽입
-```
-q.add(삽입할 value);
-```
+BOJ - 15828 [Router](https://www.acmicpc.net/problem/15828)
 
-2. 삭제
-```
-q.remove();
-```
+q를 이용하여 정보 처리를 구현한다.
 
-3. 큐의 프론트에 위치한 벨류 반환
-```
-q.peek();
+```java
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        int num;
+        Queue<Integer> q = new LinkedList<>();
+        while (true) {
+            num = Integer.parseInt(br.readLine());
+            if (num == -1) {
+                break;
+            } else if (num != 0 && q.size() != n) {
+                q.add(num);
+            } else if (num == 0 && q.size() != 0) {
+                q.remove();
+            }
+        }
+        n = q.size();
+        for (int i = 0; i < n; i++) {
+            System.out.print(q.poll() + " ");
+        }
+    }
+}
 ```
 
 ## 3. 힙 (heap)
