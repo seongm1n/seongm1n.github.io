@@ -16,7 +16,7 @@ JAVA로 자료구조 사용법 공부
 - 후입선출(LIFO) 구조를 가지고 있다.
 - 자바에서 제공하는 Stack 클래스를 이용한다.
 
-### 사용법
+### 사용
 기본적으로 push(), pop(), peek(), empty(), search() 기능을 지원한다.
 
 ```java
@@ -88,9 +88,10 @@ public class Main {
 
 ## 2. 큐 (Queue)
 
+- 표를 사러 일렬로 늘어선 사람들로 이루어진 줄
 - 선입 선출(FIFO) 구조
 
-### 사용법
+### 사용
 
 ```java
 import java.util.Queue;
@@ -151,7 +152,7 @@ public class Main {
 
 - 최솟값 또는 최댓값을 빠르게 찾아내기 위해 완전이진트리 형태로 만들어진 구조
 
-### 예제
+### 사용
 
 ```java
 import java.util.PriorityQueue;
