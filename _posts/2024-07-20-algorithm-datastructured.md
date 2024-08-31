@@ -159,26 +159,80 @@ import java.util.PriorityQueue;
 
 public class HeapExample {
     public static void main(String[] args) {
-        // Integer를 저장하는 최소 힙 생성
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
-        // 요소 추가
         minHeap.offer(5);
         minHeap.offer(2);
         minHeap.offer(8);
         minHeap.offer(1);
 
-        // 최소값 확인
         int minValue = minHeap.peek();
-        System.out.println("Min value: " + minValue); // Min value: 1
+        System.out.println("Min value: " + minValue);
 
-        // 최소값 삭제
         int deletedValue = minHeap.poll();
-        System.out.println("Deleted value: " + deletedValue); // Deleted value: 1
+        System.out.println("Deleted value: " + deletedValue);
 
-        // 최소값 확인
         minValue = minHeap.peek();
-        System.out.println("Min value: " + minValue); // Min value: 2
+        System.out.println("Min value: " + minValue);
     }
 }
 ```
+
+### 예제
+
+BOJ - 1374 [강의실](https://www.acmicpc.net/problem/1374)
+
+```java
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    private static class lesson implements Comparable<lesson> {
+        int id, start, end;
+
+        public lesson(int id, int start, int end) {
+            this.id = id;
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public int compareTo(lesson o) {
+            return start - o.start;
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        int n = Integer.parseInt(br.readLine());
+
+        List<lesson> lessons = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            int id = Integer.parseInt(st.nextToken());
+            int start = Integer.parseInt(st.nextToken());
+            int end = Integer.parseInt(st.nextToken());
+            lessons.add(new lesson(id, start, end));
+        }
+        Collections.sort(lessons);
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        int max = 1;
+
+        for (int i = 0; i < n; i++) {
+            while (!pq.isEmpty() && pq.peek() <= lessons.get(i).start) {
+                pq.poll();
+            }
+            pq.offer(lessons.get(i).end);
+            max = Math.max(max, pq.size());
+        }
+
+        System.out.println(max);
+    }
+}
+```
+class를 만들어 강의실을 처리하는 과정이 생소했다.
