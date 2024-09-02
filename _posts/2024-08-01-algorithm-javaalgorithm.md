@@ -94,58 +94,92 @@ public class Main {
 
 ## BFS
 - 너비 우선 탐색
+- 큐를 이용한 선입선출 형태
 
 ### 예제
+BOJ - 17836 [공주님을 구해라!](https://www.acmicpc.net/problem/17836)
+
+
 ```java
-package study.blog.codingnojam;
+import java.io.*;
+import java.util.*;
 
-import java.util.LinkedList;
-import java.util.Queue;
+public class Main {
+    static int n, m, t;
+    static int[][] graph;
+    static boolean[][][] visited;
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, 1, 0, -1};
 
-public class StudyBFS {
-	
-	public static void main(String[] args) {
-		
-		// 그래프를 2차원 배열로 표현해줍니다.
-		// 배열의 인덱스를 노드와 매칭시켜서 사용하기 위해 인덱스 0은 아무것도 저장하지 않습니다.
-		// 1번인덱스는 1번노드를 뜻하고 노드의 배열의 값은 연결된 노드들입니다.
-		int[][] graph = {{}, {2,3,8}, {1,6,8}, {1,5}, {5,7}, {3,4,7}, {2}, {4,5}, {1,2}};
-		
-		// 방문처리를 위한 boolean배열 선언
-		boolean[] visited = new boolean[9];
-		
-		System.out.println(bfs(1, graph, visited));
-		//출력 내용 : 1 -> 2 -> 3 -> 8 -> 6 -> 5 -> 4 -> 7 -> 
-	}
-	
-	static String bfs(int start, int[][] graph, boolean[] visited) {
-		// 탐색 순서를 출력하기 위한 용도
-		StringBuilder sb = new StringBuilder();
-		// BFS에 사용할 큐를 생성해줍니다.
-		Queue<Integer> q = new LinkedList<Integer>();
-		 
-		// 큐에 BFS를 시작 할 노드 번호를 넣어줍니다.
-		q.offer(start);
-		
-		// 시작노드 방문처리
-		visited[start] = true;
-		
-		// 큐가 빌 때까지 반복
-		while(!q.isEmpty()) {
-			int nodeIndex = q.poll();
-			sb.append(nodeIndex + " -> ");
-			//큐에서 꺼낸 노드와 연결된 노드들 체크
-			for(int i=0; i<graph[nodeIndex].length; i++) {
-				int temp = graph[nodeIndex][i];
-				// 방문하지 않았으면 방문처리 후 큐에 넣기
-				if(!visited[temp]) {
-					visited[temp] = true;
-					q.offer(temp);
-				}
-			}
-		}
-		// 탐색순서 리턴
-		return sb.toString() ;
-	}
+    public static class Node {
+        int x, y, dist;
+        boolean isGram;
+
+        public Node(int x, int y, int dist, boolean isGram) {
+            this.x = x;
+            this.y = y;
+            this.dist = dist;
+            this.isGram = isGram;
+        }
+    }
+
+    public static int bfs(int x, int y) {
+        Queue<Node> q = new LinkedList<>();
+        q.offer(new Node(x, y, 0, false));
+        visited[x][y][0] = true;
+
+        while(!q.isEmpty()) {
+            Node nNode = q.poll();
+            if (nNode.dist > t) break;
+            if (nNode.x == n - 1 && nNode.y == m - 1) return nNode.dist;
+
+            for (int i = 0; i < 4; i++) {
+                int xx = nNode.x + dx[i];
+                int yy = nNode.y + dy[i];
+                if (xx < 0 || xx >= n || yy < 0 || yy >= m) continue;
+                if (!nNode.isGram) {
+                    if (!visited[xx][yy][0] && graph[xx][yy] == 0) {
+                        q.offer(new Node(xx, yy, nNode.dist + 1, nNode.isGram));
+                        visited[xx][yy][0] = true;
+                    } else if (!visited[xx][yy][0] && graph[xx][yy] == 2) {
+                        q.offer(new Node(xx, yy, nNode.dist + 1, true));
+                        visited[xx][yy][0] = true;
+                    }
+                } else {
+                    if (!visited[xx][yy][1]) {
+                        q.offer(new Node(xx, yy, nNode.dist + 1, nNode.isGram));
+                        visited[xx][yy][1] = true;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        t = Integer.parseInt(st.nextToken());
+
+        graph = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < m; j++) {
+                graph[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        visited = new boolean[n][m][2];
+        int answer = bfs(0, 0);
+        if (answer == -1) System.out.println("Fail");
+        else System.out.println(answer);
+
+    }
+
 }
 ```
+
+bfs도 알고리즘은 알고 있지만 클래스형태로 노드를 q에 넣는 방식이 생소했다.
