@@ -120,3 +120,47 @@ Stream<Integer> infiniteStream = Stream.iterate(0, n -> n + 2);
 ```
 
 ### 2. Stream 메서드 사용
+
+<b>a. 중간 연산 (Intermediate Operations)</b>
+
+중간 연산은 스트림을 변환하고, 다음 단계로 넘기는 작업을 수행. 지연 평가(Lazy Evaluation)를 사용하므로 최종 연산이 수행될 때 실행된다.
+
+- filter : 조건에 맞는 요소만 필터링
+```java
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+Stream<Integer> evenNumbers = numbers.stream().filter(n -> n % 2 == 0);
+```
+
+- map : 요소를 반환
+```java
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+Stream<Integer> nameLengths = names.stream().map(String::length);
+```
+
+- sorted : 요소를 정렬
+```java
+List<Integer> numbers = Arrays.asList(5, 2, 3, 1, 4);
+Stream<Integer> sortedNumbers = numbers.stream().sorted();
+```
+
+<b>b. 최종 연산 (Terminal Operations)</b>
+
+최종 연산은 스트림을 처리하고, 결과를 반환하거나 종료
+
+- forEach : 각 요소에 작업 수행
+```java
+names.stream().forEach(System.out::println);
+```
+
+- collect : 결과를 컬렉션으로 반환
+```java
+List<String> filteredNames = names.stream()
+                                  .filter(name -> name.startsWith("A"))
+                                  .collect(Collectors.toList());
+```
+
+- reduce : 요소를 누적하거나 하나의 값 생성
+```java
+int sum = numbers.stream().reduce(0, Integer::sum);
+```
+
