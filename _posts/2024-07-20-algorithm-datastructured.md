@@ -21,23 +21,29 @@ JAVA로 자료구조 사용법 공부
 
 ```java
 import java.util.Stack;
-import javax.lang.model.element.Element;
 
 public class Main {
     public static void main(String[] args) {
+        // Stack 객체 생성
         Stack<Integer> stack = new Stack<>();
 
-        for(int i=1; i<=5 ; i++) {
-            stack.push(i);
-            System.out.println(stack.peek());
+        // 스택에 값 추가
+        for (int i = 1; i <= 5; i++) {
+            stack.push(i);  // 스택에 i 값을 추가
+            System.out.println("Pushed: " + i + ", Top: " + stack.peek());  // 스택의 최상단 값 확인
         }
-        stack.pop();
-        System.out.println("Pop()");
-        System.out.println(stack.peek());
-        System.out.println(stack.search(3));
-        System.out.println(stack.empty());
-    }
 
+        // 스택에서 값 제거
+        stack.pop();  // 스택의 최상단 값을 제거
+        System.out.println("After pop()");
+        System.out.println("Top after pop: " + stack.peek());  // 제거 후의 최상단 값 확인
+
+        // 스택에서 특정 값의 위치 찾기
+        System.out.println("Position of 3 in stack: " + stack.search(3));  // 3이 스택에서 몇 번째에 위치하는지 반환
+
+        // 스택이 비어있는지 확인
+        System.out.println("Is stack empty? " + stack.empty());
+    }
 }
 ```
 
@@ -99,18 +105,25 @@ import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
+        // Queue 인터페이스를 LinkedList로 구현
         Queue<Integer> q = new LinkedList<>();
 
-        for(int i=1; i<=5 ; i++) {
-            q.add(i);
-            System.out.println(q.peek());
+        // 큐에 값 추가
+        for (int i = 1; i <= 5; i++) {
+            q.add(i);  // 큐에 i를 추가
+            System.out.println("Added: " + i + ", Peek: " + q.peek());  // 큐의 첫 번째 값을 확인
         }
-        q.remove();
-        System.out.println("remove()");
-        System.out.println(q.peek());
-        System.out.println(q.isEmpty());
-    }
 
+        // 큐에서 값 제거
+        q.remove();  // 큐에서 첫 번째 값을 제거
+        System.out.println("After remove()");
+
+        // 큐에서 다시 첫 번째 값 확인
+        System.out.println("Peek after remove: " + q.peek());  // 큐에서 제거 후의 첫 번째 값
+
+        // 큐가 비어있는지 확인
+        System.out.println("Is queue empty? " + q.isEmpty());
+    }
 }
 ```
 
@@ -157,22 +170,27 @@ public class Main {
 ```java
 import java.util.PriorityQueue;
 
-public class HeapExample {
+public class MinHeapExample {
     public static void main(String[] args) {
+        // PriorityQueue는 기본적으로 최소 힙으로 동작
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
+        // 데이터 삽입
         minHeap.offer(5);
         minHeap.offer(2);
         minHeap.offer(8);
         minHeap.offer(1);
 
-        int minValue = minHeap.peek();
+        // 최소값 조회
+        int minValue = minHeap.peek();  // 최소값 조회
         System.out.println("Min value: " + minValue);
 
-        int deletedValue = minHeap.poll();
+        // 최소값 삭제
+        int deletedValue = minHeap.poll();  // 최소값 삭제
         System.out.println("Deleted value: " + deletedValue);
 
-        minValue = minHeap.peek();
+        // 최소값 다시 조회
+        minValue = minHeap.peek();  // 삭제 후 새로운 최소값 조회
         System.out.println("Min value: " + minValue);
     }
 }
@@ -241,3 +259,40 @@ class를 만들어 강의실을 처리하는 과정이 생소했다.
 
 - (key, value)로 데이터를 저장하는 자료구조
 - 시간복잡도 O(1)로 매우 빠르다.
+
+### 사용
+
+```java
+import java.util.Hashtable;
+
+public class HashTableExample {
+    public static void main(String[] args) {
+        // Hashtable 객체 생성 (키와 값은 모두 Integer 타입)
+        Hashtable<Integer, String> hashTable = new Hashtable<>();
+
+        // 데이터 삽입
+        hashTable.put(1, "Apple");
+        hashTable.put(2, "Banana");
+        hashTable.put(3, "Cherry");
+        hashTable.put(4, "Date");
+
+        // 값 조회
+        String value = hashTable.get(2); // 키 2에 해당하는 값을 가져옴
+        System.out.println("Value for key 2: " + value);
+
+        // 특정 키가 존재하는지 확인
+        boolean containsKey = hashTable.containsKey(3);
+        System.out.println("Does key 3 exist? " + containsKey);
+
+        // 데이터 삭제
+        String removedValue = hashTable.remove(4); // 키 4에 해당하는 값을 삭제
+        System.out.println("Removed value for key 4: " + removedValue);
+
+        // 남아있는 모든 값 출력
+        System.out.println("Current HashTable contents:");
+        hashTable.forEach((key, val) -> {
+            System.out.println("Key: " + key + ", Value: " + val);
+        });
+    }
+}
+```
