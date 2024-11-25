@@ -10,7 +10,7 @@ render_with_liquid: false
 ## for VS stream: 왜 stream을 사용할까?
 
 우아한 프리코스를 진행하면서 많은 사람들이 Stream API를 사용하고 있었다. 
-사실 처음에는 <b>효율적이지도 않고, 배우기도 까다로운데 굳이 for문을 버리고 Stream을 사용해야되나?<b> 하는 생각이 있었다. <br>
+사실 처음에는 <b>효율적이지도 않고, 배우기도 까다로운데 굳이 for문을 버리고 Stream을 사용해야되나?</b> 하는 생각이 있었다. <br>
 사람들이 말하는 Stream API를 사용하는 이유는 여러가지가 있겠지만 사람들이 말하는 가장 큰 이유는 ```가독성```이다.
 
 ### 코드의 간결성과 가독성
@@ -89,3 +89,34 @@ List<Integer> evenSquares = numbers.stream()
                                    .collect(Collectors.toList());
 ```
 Stream은 데이터 처리 과정을 논리적인 단계로 나눠서 표현하므로 이해하기 쉽고 유지보수와 확장에 용이하다.
+
+## Stream 사용법
+
+Java의 Stream API는 데이터를 선언적이고 유연하게 처리할 수 있도록 도와준다.
+
+### 1. Stream 생성
+Stream은 다양한 데이터 소스 (컬렉션, 배열, 파일 등)에서 생성할 수 있다.
+
+- 컬렉션에서 생성
+```java
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+Stream<String> stream = names.stream();
+```
+
+- 배열에서 생성
+```java
+int[] numbers = {1, 2, 3, 4, 5};
+IntStream intStream = Arrays.stream(numbers);
+```
+
+- 값 직접 제공
+```java
+Stream<String> stream = Stream.of("A", "B", "C");
+```
+
+- 무한 스트림 생성
+```java
+Stream<Integer> infiniteStream = Stream.iterate(0, n -> n + 2);
+```
+
+### 2. Stream 메서드 사용
